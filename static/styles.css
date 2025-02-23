@@ -1,106 +1,99 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #E6F4F1;
+  text-align: center;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f8ff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      flex-direction: column;
-      background-image: url("website-background.png"); 
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
-    .dropdown {
-      position: relative;
-      width: 250px;
-      margin-bottom: 10px;
-    }
+.form-slide {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
 
-    .dropdown-container {
-      display: flex;
-      gap: 20px;
-    }
+h1 {
+  color: #5A8C3D;
+  font-size: 36px;
+}
 
-    .dropdown select {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      font-weight: bold;
-      border: 2px solid #ccc;
-      border-radius: 5px;
-      background-color: #f8f8f8;
-      cursor: pointer;
-      appearance: none;
-    }
+.multi-select-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
 
-    .dropdown select:focus {
-      outline: none;
-      border-color: #888;
-    }
+.multi-select, .selected-options {
+  width: 45%;
+}
 
-    .chips-container-wrapper {
-      width: 250px;
-      height: 150px;
-      border: 2px solid #ccc;
-      border-radius: 5px;
-      background-color: #f8f8f8;
-      overflow-y: auto;
-      padding: 10px;
-    }
+.multi-select select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 
-    .chips-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+.toggle-options {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
 
-    .chip {
-      display: flex;
-      align-items: center;
-      padding: 8px 12px;
-      font-size: 14px;
-      background-color: #d1e7ff;
-      color: #004085;
-      border: 1px solid #b6d4fe;
-      border-radius: 20px;
-      cursor: default;
-    }
+.toggle-options label {
+  background: #D3D3D3;
+  padding: 8px;
+  margin: 5px;
+  border-radius: 5px;
+  display: block;
+  text-align: left;
+  cursor: pointer;
+}
 
-    .chip button {
-      margin-left: 10px;
-      background-color: transparent;
-      border: none;
-      font-size: 16px;
-      font-weight: bold;
-      color: #004085;
-      cursor: pointer;
-    }
+button {
+  background: #6DA34D;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
 
-    .chip button:hover {
-      color: #ff0000;
-    }
+button:hover {
+  background: #5A8C3D;
+}
 
-    .submit-button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      color: white;
-      background-color: #007bff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+.back-button, .next-button {
+  display: inline-block;
+  background: #6DA34D;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
 
-    .submit-button:hover {
-      background-color: #0056b3;
-    }
+.back-button {
+  float: left;
+}
 
-    .chips-wrapper-container {
-      display: flex;
-      gap: 20px;
-      margin-top: 10px;
-    }
-  
+.next-button {
+  float: right;
+}
+
+.need-assistance {
+  background: lightgray;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 10px;
+}

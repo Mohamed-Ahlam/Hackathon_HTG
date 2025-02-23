@@ -11,21 +11,22 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background-color: #f0f2f5;
+      background-color: #f0f2f5; 
       margin: 0;
+
       background-image: url("../static/website-background.png"); 
       background-size: cover;
       background-repeat: no-repeat;
-      
     }
 
     .form-container {
-      background-color: #ffffff;
+      background-color: #ffffff; 
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       padding: 30px;
       width: 400px;
       text-align: left;
+
       height: 400px;
     }
 
@@ -43,7 +44,7 @@
     .form-group input,
     .form-group select,
     .form-group textarea {
-      width: calc(100% - 22px);
+      width: calc(100% - 22px); 
       padding: 10px;
       border: 1px solid #ddd;
       border-radius: 5px;
@@ -55,17 +56,17 @@
     .form-group input:focus,
     .form-group select:focus,
     .form-group textarea:focus {
-      border-color: #007bff;
+      border-color: #007bff; 
       outline: none;
     }
 
     .form-group select {
-      appearance: none;
+      appearance: none; 
       background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
       background-repeat: no-repeat;
       background-position: right 10px top 50%;
       background-size: 16px;
-      padding-right: 30px;
+      padding-right: 30px; 
     }
 
     .form-group textarea {
@@ -79,22 +80,6 @@
       color: #333;
     }
 
-    .checkbox-group {
-      border: 1px solid #ddd;
-    }
-
-    .checkbox-group label {
-      display: flex;
-      align-items: start;
-      margin-bottom: 8px;
-      width: 40px;
-    }
-
-    .checkbox-group input[type="checkbox"] {
-      margin-right: 8px;
-      
-    }
-
     .button-container {
       display: flex;
       justify-content: space-between;
@@ -102,38 +87,40 @@
       margin-top: 20px;
     }
 
+  
     .leaf-buttonNext {
       background-image: url('../static/leafNext.png');
    background-size: 30%;
       background-repeat: no-repeat;
       background-position: center;
-      width: 500px; 
-      height: 100px;
+      width: 500px;
+      height: 100px; 
       border: none;
       cursor: pointer;
       margin-top: 20px;
       background-color: transparent;
       color: transparent;
+      
       position: absolute;
-      bottom: 30px;
-      right: 30px;
- 
+    bottom: 30px; 
+    right: 30px; 
     }
      .leaf-buttonBack {
       background-image: url('../static/leafBack.png');
      background-size: 30%;
       background-repeat: no-repeat;
       background-position: center;
-      width: 500px; 
-      height: 100px;
+      width: 500px;
+      height: 100px; 
       border: none;
       cursor: pointer;
       margin-top: 20px;
       background-color: transparent;
       color: transparent;
+      
       position: absolute;
-      bottom: 30px;
-      left: 30px; 
+    bottom: 30px; 
+    left: 30px; 
     }
   </style>
 </head>
@@ -141,22 +128,23 @@
   <div class="form-container">
     <h2>Lesson Details</h2>
     <div class="form-group">
-      <label for="disabilities">Select Disabilities:</label>
-      <select id="disabilities" name="disabilities" multiple size="5">
-        <option value="autism">Autism</option>
-        <option value="dyslexia">Dyslexia</option>
-        <option value="adhd">ADHD</option>
-        <option value="visual-impairment">Visual Impairment</option>
-        <option value="hearing-impairment">Hearing Impairment</option>
+      <label for="grade">Grade Level:</label>
+      <select name="grade" id="grade">
+        <option value="k">Kindergarten</option>
+        <option value="1">1st Grade</option>
+        <option value="2">2nd Grade</option>
+        <option value="3">3rd Grade</option>
       </select>
     </div>
-    <div class="form-group checkbox-group">
-      <label><input type="checkbox" name="toggle" value="paraprofessional"> Paraprofessional</label>
-      <label><input type="checkbox" name="toggle" value="language-helper"> Language Helper</label>
-      <label><input type="checkbox" name="toggle" value="el-students"> EL Students</label>
-      <label><input type="checkbox" name="toggle" value="coteacher"> Coteacher</label>
+    <div class="form-group">
+      <label for="lesson-topic">Lesson Topic:</label>
+      <input type="text" id="lesson-topic" placeholder="Enter lesson topic...">
     </div>
-    
+    <div class="form-group">
+      <label for="lesson-objective">Lesson Objective:</label>
+      <textarea id="lesson-objective" placeholder="Enter lesson objective..."></textarea>
+    </div>
+        
      <div class="button-container">
       <button class="leaf-buttonBack" onclick="goBack()"></button>
       <button class="leaf-buttonNext" onclick="goToNextPage()"></button>
@@ -166,25 +154,32 @@
   <script>
 
      function goBack() {
-      // window.history.back();
-      console.log('Going back');
+      window.history.back();
     }
 
     function goToNextPage() {
-      // Collect form data and store it in local storage
-      const disabilities = Array.from(document.getElementById('disabilities').selectedOptions).map(option => option.value);
-      const toggles = Array.from(document.querySelectorAll('input[name="toggle"]:checked')).map(checkbox => checkbox.value);
-      const formData = {
-        disabilities: disabilities,
-        toggles: toggles
-      };
+  // Get the grade, lesson topic, and lesson objective values
+  const grade = document.getElementById('grade').value;
+  const lessonTopic = document.getElementById('lesson-topic').value;
+  const lessonObjective = document.getElementById('lesson-objective').value;
 
-      // Store form data in local storage or session storage
-      localStorage.setItem('formData', JSON.stringify(formData));
+  // Create an object to store the data
+  const formData = {
+    grade: grade,
+    lessonTopic: lessonTopic,
+    lessonObjective: lessonObjective
+  };
 
-      // Redirect to the next page
-      window.location.href = 'grade.html'; 
-    }
+  // Store form data in local storage
+  localStorage.setItem('formData', JSON.stringify(formData));
+
+      console.log('Going to the next page', formData);
+
+
+  // Redirect to the next page
+  window.location.href = 'lessonOutOne.html';
+}
+
   </script>
 </body>
 </html>

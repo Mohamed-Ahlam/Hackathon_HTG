@@ -30,11 +30,10 @@
       </div>
     </div>
   </div>
-
-  <div class="navigation">
-    <button onclick="goBack()">Back</button>
-    <button onclick="goNext()">Next</button>
-  </div>
+<div class="button-container">
+      <button class="leaf-buttonBack" onclick="goBack()"></button>
+      <button class="leaf-buttonNext" onclick="goToNextPage()"></button>
+    </div>
 
   <script>
     function addToLessonPlan(text) {
@@ -46,11 +45,24 @@
       window.history.back();
     }
 
-    function goNext() {
-      const lessonPlan = document.getElementById('lessonPlan').value;
-      localStorage.setItem('lessonPlan', lessonPlan);
-      window.location.href = 'lessonOutTwo.html';
-    }
+     function goToNextPage() {
+  const lesson = document.getElementById('lessonPlan').value;
+
+  // Create an object to store the data
+  const formData = {
+    lessonPlan: lessonPlan
+  };
+
+  // Store form data in local storage
+  localStorage.setItem('formData', JSON.stringify(formData));
+
+      console.log('Going to the next page', formData);
+
+
+  // Redirect to the next page
+  window.location.href = 'lessonOutTwo.html';
+}
+
   </script>
 </body>
 </html>

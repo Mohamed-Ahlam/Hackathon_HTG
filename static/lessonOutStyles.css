@@ -8,7 +8,6 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
-      background-color: #f0f8ff;
       background-image: url("website-background.png"); 
       background-size: cover;
       background-repeat: no-repeat;
@@ -17,6 +16,7 @@
     .container {
       display: flex;
       gap: 20px;
+      height: 50vh;
     }
 
     .textbox-container {
@@ -43,6 +43,7 @@
       border: 2px solid #ccc;
       border-radius: 5px;
       font-size: 16px;
+       width: 90%;
     }
 
     .cards-container {
@@ -72,25 +73,64 @@
       color: #555;
     }
 
-    .navigation {
-      margin-top: 20px;
+    .button-container {
       display: flex;
       justify-content: space-between;
-      width: 100%;
-      max-width: 600px;
+      align-items: start;
+      margin-top: 20px;
     }
 
-    .navigation button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      background-color: #007bff;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .navigation button:hover {
-      background-color: #0056b3;
-    }
   
+    .leaf-buttonSubmit {
+      background-image: url('../static/leafSubmit.png');
+   background-size: 30%;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 500px;
+      height: 100px; 
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+      background-color: transparent;
+      color: transparent;
+      
+      position: absolute;
+    bottom: 30px; 
+    right: 30px; 
+ 
+    }
+    .leaf-buttonNext {
+      background-image: url('../static/leafNext.png');
+   background-size: 30%;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 500px;
+      height: 100px; 
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+      background-color: transparent;
+      color: transparent;
+      
+      position: absolute;
+    bottom: 30px; 
+    right: 30px; 
+ 
+    }
+     .leaf-buttonBack {
+      background-image: url('../static/leafBack.png');
+     background-size: 30%;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 500px;
+      height: 100px; 
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+      background-color: transparent;
+      color: transparent;
+      
+      position: absolute;
+    bottom: 30px; 
+    left: 30px; 
+    }
