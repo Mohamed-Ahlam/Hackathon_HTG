@@ -9,7 +9,7 @@
 <body>
   <div class="container">
     <div class="textbox-container">
-      <h2>Lesson Outline: Opening Activity</h2>
+      <h2>Lesson Outline: Lesson Summary</h2>
       <textarea id="lessonPlan" class="textbox" placeholder="Add to your lesson plan here..."></textarea>
     </div>
     <div class="cards-container">
@@ -23,9 +23,10 @@
       </div>
     </div>
   </div>
-<div class="button-container">
+
+ <div class="button-container">
       <button class="leaf-buttonBack" onclick="goBack()"></button>
-      <button class="leaf-buttonNext" onclick="goToNextPage()"></button>
+      <button class="leaf-buttonSubmit" onclick="submitLessonPlan()"></button>
     </div>
 
   <script>
@@ -38,24 +39,28 @@
       window.history.back();
     }
 
-     function goToNextPage() {
-  const lesson = document.getElementById('lessonPlan').value;
+    function submitLessonPlan() {
+      const lessonPlan = document.getElementById('lessonPlan').value;
 
-  // Create an object to store the data
-  const formData = {
-    lessonPlan: lessonPlan
-  };
-
-  // Store form data in local storage
-  localStorage.setItem('formData', JSON.stringify(formData));
-
-      console.log('Going to the next page', formData);
-
-
-  // Redirect to the next page
-  window.location.href = 'lessonOutTwo.html';
-}
-
+      console.log('Submitting lesson plan:', lessonPlan);
+      
+      
+      fetch('/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ lessonPlan })
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Lesson plan submitted successfully!');
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error submitting lesson plan');
+      });
+    }
   </script>
 </body>
 </html>

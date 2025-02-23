@@ -23,11 +23,10 @@
       </div>
     </div>
   </div>
-
-  <div class="navigation">
-    <button onclick="goBack()">Back</button>
-    <button onclick="submitLessonPlan()">Submit</button>
-  </div>
+<div class="button-container">
+      <button class="leaf-buttonBack" onclick="goBack()"></button>
+      <button class="leaf-buttonNext" onclick="goToNextPage()"></button>
+    </div>
 
   <script>
     function addToLessonPlan(text) {
@@ -39,25 +38,24 @@
       window.history.back();
     }
 
-    function submitLessonPlan() {
-      const lessonPlan = document.getElementById('lessonPlan').value;
-      
-      fetch('/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ lessonPlan })
-      })
-      .then(response => response.json())
-      .then(data => {
-        alert('Lesson plan submitted successfully!');
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Error submitting lesson plan');
-      });
-    }
+     function goToNextPage() {
+  const lesson = document.getElementById('lessonPlan').value;
+
+  // Create an object to store the data
+  const formData = {
+    lessonPlan: lessonPlan
+  };
+
+  // Store form data in local storage
+  localStorage.setItem('formData', JSON.stringify(formData));
+
+      console.log('Going to the next page', formData);
+
+
+  // Redirect to the next page
+  window.location.href = 'lessonOutThree.html';
+}
+
   </script>
 </body>
 </html>
