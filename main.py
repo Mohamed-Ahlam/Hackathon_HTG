@@ -253,5 +253,10 @@ def download_pdf():
     pdf_path = "generated_pdfs/Lesson_Plan.pdf"
     return send_file(pdf_path, as_attachment=True)
 
+@app.route('/finalPage.html')
+def final():
+    return render_template('finalPage.html')
+    
+
 if __name__ == '__main__':
     app.run(debug=True)

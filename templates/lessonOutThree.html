@@ -41,42 +41,29 @@
         const textbox = document.getElementById('lessonPlan');
         textbox.value += (textbox.value ? '\n' : '') + text;
       }
-    
+  
       function goBack() {
         window.history.back();
       }
-    
-      function goToNextPage() {
-        const lesson = document.getElementById('lessonPlan').value;
-    
-        // Create an object to store the data
-        const formData = {
-          lessonPlan: lesson
-        };
-    
-        // Store form data in local storage
-        localStorage.setItem('formData', JSON.stringify(formData));
-    
+  
+       function goToNextPage() {
+    const lesson = document.getElementById('lessonPlan').value;
+  
+    // Create an object to store the data
+    const formData = {
+      lessonPlan: lessonPlan
+    };
+  
+    // Store form data in local storage
+    localStorage.setItem('formData', JSON.stringify(formData));
+  
         console.log('Going to the next page', formData);
-    
-        // Send data to the backend to generate the PDF
-        fetch('/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)  // Send form data in the body
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data.message);  // Handle success response
-          // Redirect to the next page after PDF is generated
-          window.location.href = 'lessonOutThree.html';
-        })
-        .catch(error => {
-          console.error('Error:', error);  // Handle errors if any
-        });
-      }
+  
+  
+    // Redirect to the next page
+    window.location.href = 'finalPage.html';
+  }
+  
     </script>
 </body>
 </html>
