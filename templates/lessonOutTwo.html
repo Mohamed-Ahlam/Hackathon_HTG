@@ -13,13 +13,20 @@
       <textarea id="lessonPlan" class="textbox" placeholder="Add to your lesson plan here..."></textarea>
     </div>
     <div class="cards-container">
-      <div class="card" onclick="addToLessonPlan('Autism')">
-        <h3>Autism</h3>
-        <p>Sensitivity to change - They may get upset by minor changes or changes to their routine.</p>
+      <div class="card" onclick="addToLessonPlan('{{ sug1_var }}')">
+        <h3>{{ dis1_var }}</h3>
+        <p>{{ sin1_var }}</p>
+        <p>{{ sug1_var }}</p>
       </div>
-      <div class="card" onclick="addToLessonPlan('Adapting to Changes')">
-        <h3>Adapting to Changes</h3>
-        <p>Inform the student about upcoming changes in routine or activities in advance to prepare them.</p>
+      <div class="card" onclick="addToLessonPlan('{{ sug2_var }}')">
+        <h3>{{ dis2_var }}</h3>
+        <p>{{ sin2_var }}</p>
+        <p>{{ sug2_var }}</p>
+      </div>
+      <div class="card" onclick="addToLessonPlan('{{ sug3_var }}')">
+        <h3>{{ dis3_var }}</h3>
+        <p>{{ sin3_var }}</p>
+        <p>{{ sug3_var }}</p>
       </div>
     </div>
   </div>

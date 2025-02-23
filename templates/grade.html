@@ -152,34 +152,37 @@
   </div>
 
   <script>
-
-     function goBack() {
-      window.history.back();
-    }
-
     function goToNextPage() {
-  // Get the grade, lesson topic, and lesson objective values
-  const grade = document.getElementById('grade').value;
-  const lessonTopic = document.getElementById('lesson-topic').value;
-  const lessonObjective = document.getElementById('lesson-objective').value;
-
-  // Create an object to store the data
-  const formData = {
-    grade: grade,
-    lessonTopic: lessonTopic,
-    lessonObjective: lessonObjective
-  };
-
-  // Store form data in local storage
-  localStorage.setItem('formData', JSON.stringify(formData));
-
-      console.log('Going to the next page', formData);
-
-
-  // Redirect to the next page
-  window.location.href = 'lessonOutOne.html';
-}
-
+      // Get the grade, lesson topic, and lesson objective values
+      const grade = document.getElementById('grade').value;
+      const lessonTopic = document.getElementById('lesson-topic').value;
+      const lessonObjective = document.getElementById('lesson-objective').value;
+  
+      // Create an object to store the data
+      const formData = {
+        grade: grade,
+        lessonTopic: lessonTopic,
+        lessonObjective: lessonObjective
+      };
+  
+      // Send the data to Flask backend using a POST request
+      fetch('/store_lesson_data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Data stored successfully:', data);
+        // Redirect to the next page
+        window.location.href = 'lessonOutOne.html';
+      })
+      .catch(error => {
+        console.error('Error storing data:', error);
+      });
+    }
   </script>
 </body>
 </html>
