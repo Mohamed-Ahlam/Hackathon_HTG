@@ -3,23 +3,133 @@ from pdf_generator import generate_pdf  # Import PDF generator
 import pandas as pd
 import os
 from datetime import datetime
+import random
 
 app = Flask(__name__)
 
 # File paths
 CSV_FILE = "static/disability_data.csv"
-SAVED_CSV_FOLDER = "saved_csvs"
+SAVED_CSV_FOLDER = "saved_csvs/updated_df.csv"
 
 # Ensure CSV file and folder exist
 if not os.path.exists(SAVED_CSV_FOLDER):
     os.makedirs(SAVED_CSV_FOLDER)
 
-if not os.path.exists(CSV_FILE):
-    pd.DataFrame(columns=["File", "Disabilities", "Assistance", "Grade Level", "Lesson Topic", "Learning Objective"]).to_csv(CSV_FILE, index=False)
+#global vars
+inputdata = {
+    "file": "empty",
+    "disabilities": [],
+    "assistance": [],
+    "grade": "empty",
+    "lessonTopic": "empty",
+    "learningObjective": "empty"
+}
 
-@app.route('/')
+dis1 = ""
+dis2 = ""
+dis3 = ""
+
+sin1 = ""
+sin2 = ""
+sin3 = ""
+
+sug1 = ""
+sug2 = ""
+sug3 = ""
+
+lessout1 = ""
+lessout2 = ""
+lessout3 = ""
+
+
+#base functions
+def filtercsv():
+    """Filters the CSV based on selected disabilities"""
+    dis = inputdata.get("disabilities")  # Get selected disabilities
+
+    # Reload the CSV to get updated data
+    df = pd.read_csv(CSV_FILE)
+
+    #debugging
+    print(df)
+
+    # Filter CSV where the first column matches any selected disability
+    #filtered_df = df[df["Disabilities"].str.contains('|'.join(disabilities), na=False)]
+    filtered_df = df[df['Disorder'].str.contains(dis)]
+
+    #may need to go back and fix
+    # Save csv
+    filtered_df.to_csv(SAVED_CSV_FOLDER, index=False)
+    return send_file(SAVED_CSV_FOLDER, as_attachment=True)
+
+def get_random_index(df):
+ #Returns a random integer between 0 (inclusive) and the number of rows in the DataFrame (exclusive).
+  return random.randint(1, len(df) - 2)
+
+def select_suggestion():
+    global dis1, dis2, dis3, sin1, sin2, sin3, sug1, sug2, sug3  # Add this line
+
+    #df = pd.read_csv(SAVED_CSV_FOLDER)
+    df = pd.read_csv(SAVED_CSV_FOLDER, delimiter=",", quotechar='"')
+    df = pd.read_csv(SAVED_CSV_FOLDER, quoting=3)
+    print(df)
+
+    indx = get_random_index(df)
+
+    dis1 = df['Disorder'].iloc[indx]
+    dis2 = df['Disorder'].iloc[indx - 1]
+    dis3 = df['Disorder'].iloc[indx + 1]
+
+    sin1 = df['Signs'].iloc[indx]
+    sin2 = df['Signs'].iloc[indx - 1]
+    sin3 = df['Signs'].iloc[indx + 1]
+
+    sug1 = df['suggestions'].iloc[indx]
+    sug2 = df['suggestions'].iloc[indx - 1]
+    sug3 = df['suggestions'].iloc[indx + 1]
+
+    print(dis1)
+
+
+#Render the templates
+
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    #if request.method == 'POST':
+        
+    if request.method == 'GET':
+        return render_template('index.html')
+
+@app.route('/lessonOutOne.html', methods=['GET', 'POST'])
+def render1():
+    global lessout1
+    if request.method == 'POST':
+        select_suggestion() 
+        lessout1 = request.form.getlist('lessonPlan')
+        
+    if request.method == 'GET':
+        #plan is to randomly pick 3 suggestions out of the filtered rows, send back to the html file
+        return render_template('lessonOutOne.html', dis1_var = dis1, dis2_var = dis2, dis3_var = dis3, sin1_var = sin1, sin2_var = sin2, sin3_var = sin3, sug1_var = sug1, sug2_var = sug2, sug3_var = sug3)
+        #return render_template('lessonOutOne.html')
+
+@app.route('/lessonOutTwo.html', methods=['GET', 'POST'])
+def render2():
+    #return render_template('sim.html', w_var = water, t_var = temp, v_var = int(vege), d_var = int(decomp), h_var = int(herb), c_var = int(carn), year_var = year, grid = biomegrid, imageList=crucialList)
+    return render_template('lessonOutTwo.html')
+
+@app.route('/lessonOutThree.html', methods=['GET', 'POST'])
+def render3():
+    #return render_template('sim.html', w_var = water, t_var = temp, v_var = int(vege), d_var = int(decomp), h_var = int(herb), c_var = int(carn), year_var = year, grid = biomegrid, imageList=crucialList)
+    return render_template('lessonOutThree.html')
+
+@app.route('/finaldisplay.html', methods=['GET', 'POST'])
+def renderpdf():
+    #return render_template('sim.html', w_var = water, t_var = temp, v_var = int(vege), d_var = int(decomp), h_var = int(herb), c_var = int(carn), year_var = year, grid = biomegrid, imageList=crucialList)
+    return render_template('finaldisplay.html')
+
+
+
+#OLD CODE
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -50,29 +160,6 @@ def submit():
 
     return jsonify({"message": "Form submitted successfully!", "pdf": pdf_filename, "csv": saved_csv_path})
 
-@app.route('/generate', methods=['POST'])
-def filter_suggestions():
-    """Filters the CSV based on selected disabilities"""
-    disabilities = request.form.getlist('disabilities')  # Get selected disabilities
-
-    # Reload the CSV to get updated data
-    df = pd.read_csv(CSV_FILE)
-
-    # Filter CSV where the first column matches any selected disability
-    filtered_df = df[df["Disabilities"].str.contains('|'.join(disabilities), na=False)]
-
-
-    # Append new data to the original CSV
-    #new_data = pd.DataFrame([form_data])
-    #filtered_df.to_csv(CSV_FILE, mode='a', header=False, index=False)
-
-
-    # Save filtered data with a timestamp
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filtered_csv_path = os.path.join(SAVED_CSV_FOLDER, f"filtered_results_{timestamp}.csv")
-    filtered_df.to_csv(filtered_csv_path, index=False)
-
-    return send_file(filtered_csv_path, as_attachment=True)
 
 @app.route('/download-pdf')
 def download_pdf():

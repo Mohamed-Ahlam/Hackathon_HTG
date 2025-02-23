@@ -3,7 +3,7 @@ from reportlab.pdfgen import canvas
 from datetime import datetime
 import os
 
-def generate_pdf(form_data):
+def generate_pdf(form_data, lessout1, lessout2, lessout3):
     """ Creates a PDF lesson plan based on form data """
     
     # Ensure output directory exists
@@ -27,6 +27,8 @@ def generate_pdf(form_data):
     c.setFont("Times-Bold", 14)
     subtitle = f"{form_data['Lesson Topic']} - {form_data['Grade Level']}"
     c.drawCentredString(width / 2, height - 80, subtitle)
+
+    
 
     # Content
     c.setFont("Times-Bold", 12)
