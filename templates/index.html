@@ -4,83 +4,104 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teaching Tree</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
-  <div class="container">
-    <div class="form-slide">
-      <form id="form1">
-        <div class="form-group">
-          <label for="upload">Upload IEPs:</label>
-          <input type="file" id="upload" name="upload">
-        </div>
+  <div class="dropdown-container">
+    <div class="dropdown">
+      <select id="dropdown1">
+        <option disabled selected>Learning Disabilities</option>
+        <option>Autism</option>
+        <option>Visual Impairment</option>
+        <option>Developmental Cognitive Disabilities</option>
+        <option>Hearing Impairment</option>
+        <option>Emotional & Behavioral Disorders</option>
+        <option>Developmental Delay</option>
+        <option>Physical Impairment</option>
+        <option>Specific Learning Disabilities</option>
+        <option>Other Health Impairment</option>
+      </select>
+    </div>
 
-        <div class="form-group multi-select-container">
-          <div class="multi-select">
-            <label for="disabilities">Select Disabilities:</label>
-            <select id="disabilities" name="disabilities" multiple size="5">
-              <option value="autism">Autism</option>
-              <option value="dyslexia">Dyslexia</option>
-              <option value="adhd">ADHD</option>
-              <option value="visual-impairment">Visual Impairment</option>
-              <option value="hearing-impairment">Hearing Impairment</option>
-            </select>
-          </div>
-          <div class="selected-options" id="selectedOptions">
-            Selected options will appear here.
-          </div>
-        </div>
-
-        <div class="form-group toggle-options">
-          <label><input type="checkbox" name="toggle" value="paraprofessional"> Paraprofessional</label>
-          <label><input type="checkbox" name="toggle" value="language-helper"> Language Helper</label>
-          <label><input type="checkbox" name="toggle" value="el-students"> EL Students</label>
-          <label><input type="checkbox" name="toggle" value="coteacher"> Coteacher</label>
-        </div>
-
-        <button type="button" id="nextButton">Next</button>
-      </form>
-
-      <form id="form2">
-        <div class="form-group">
-          <label for="grade">Select Grade Level:</label>
-          <select id="grade" name="grade">
-            <option value="k">Kindergarten</option>
-            <option value="1">1st Grade</option>
-            <option value="2">2nd Grade</option>
-            <option value="3">3rd Grade</option>
-            <option value="4">4th Grade</option>
-            <option value="5">5th Grade</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="lesson">Lesson Topic:</label>
-          <input type="text" id="lesson" name="lesson">
-        </div>
-
-        <div class="form-group">
-          <label for="objective">Learning Objective:</label>
-          <input type="text" id="objective" name="objective">
-        </div>
-        <button type="button" onclick="window.location.href='lessonOutline.html'">Next</button>
-      </form>
+    <div class="dropdown">
+      <select id="dropdown2">
+        <option disabled selected>Classroom Support</option>
+        <option>Classroom Additions</option>
+        <option>Paraprofessional</option>
+        <option>Language Interpreter</option>
+        <option>EL Students(s)</option>
+        <option>Co-Teachers</option>
+      </select>
     </div>
   </div>
 
-  <script>
-    const nextButton = document.getElementById('nextButton');
-    const formSlide = document.querySelector('.form-slide');
-    const disabilities = document.getElementById('disabilities');
-    const selectedOptions = document.getElementById('selectedOptions');
+  <div class="chips-wrapper-container">
+    <div class="chips-container-wrapper">
+      <div class="chips-container" id="chips-container1"></div>
+    </div>
 
-    nextButton.addEventListener('click', () => {
-      formSlide.style.transform = 'translateX(-100%)';
+    <div class="chips-container-wrapper">
+      <div class="chips-container" id="chips-container2"></div>
+    </div>
+  </div>
+
+  <button class="submit-button" onclick="goToNextPage()">Next</button>
+
+  <script>
+    const dropdown1 = document.getElementById("dropdown1");
+    const dropdown2 = document.getElementById("dropdown2");
+    const chipsContainer1 = document.getElementById("chips-container1");
+    const chipsContainer2 = document.getElementById("chips-container2");
+
+    function addChip(selectedValue, chipsContainer) {
+      const existingChip = [...chipsContainer.children].some(
+        (chip) => chip.textContent.includes(selectedValue)
+      );
+
+      if (!existingChip) {
+        const chip = document.createElement("div");
+        chip.classList.add("chip");
+
+        chip.innerHTML = `
+          ${selectedValue}
+          <button onclick="removeChip(this)">×</button>
+        `;
+
+        chipsContainer.appendChild(chip);
+      }
+    }
+
+    dropdown1.addEventListener("change", () => {
+      const selectedValue = dropdown1.value;
+      addChip(selectedValue, chipsContainer1);
+      dropdown1.selectedIndex = 0;
     });
-    disabilities.addEventListener('change', () => {
-      const selected = Array.from(disabilities.selectedOptions).map(option => option.text);
-      selectedOptions.textContent = selected.join(', ') || 'Selected options will appear here.';
+
+    dropdown2.addEventListener("change", () => {
+      const selectedValue = dropdown2.value;
+      addChip(selectedValue, chipsContainer2);
+      dropdown2.selectedIndex = 0;
     });
+
+    function removeChip(button) {
+      const chip = button.parentElement;
+      chip.parentElement.removeChild(chip);
+    }
+
+    function goToNextPage() {
+      const chips1 = [...chipsContainer1.children].map(
+        (chip) => chip.textContent.replace("×", "").trim()
+      );
+
+      const chips2 = [...chipsContainer2.children].map(
+        (chip) => chip.textContent.replace("×", "").trim()
+      );
+
+      localStorage.setItem("learningDisabilities", JSON.stringify(chips1));
+      localStorage.setItem("classroomSupport", JSON.stringify(chips2));
+
+      window.location.href = "lessonOutOne.html";
+    }
   </script>
 </body>
 </html>

@@ -1,0 +1,96 @@
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f0f8ff;
+      background-image: url("website-background.png"); 
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .container {
+      display: flex;
+      gap: 20px;
+    }
+
+    .textbox-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border: 4px solid gray;
+      border-radius: 10px;
+      padding: 20px;
+      background-color: white;
+    }
+
+    .textbox-container h2 {
+      margin: 0;
+      margin-bottom: 10px;
+    }
+
+    .textbox {
+      flex: 1;
+      resize: none;
+      width: 100%;
+      height: 300px;
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .cards-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card {
+      border: 2px solid #4caf50;
+      border-radius: 5px;
+      padding: 10px;
+      background-color: #e8f5e9;
+      cursor: pointer;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #2e7d32;
+    }
+
+    .card p {
+      margin: 5px 0 0 0;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .navigation {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .navigation button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .navigation button:hover {
+      background-color: #0056b3;
+    }
+  
