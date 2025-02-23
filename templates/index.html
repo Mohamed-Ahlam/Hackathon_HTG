@@ -31,6 +31,7 @@
 
     .form-group {
       margin-bottom: 20px;
+      
     }
 
     .form-group label {
@@ -44,6 +45,7 @@
     .form-group select,
     .form-group textarea {
       width: calc(100% - 22px);
+      
       padding: 10px;
       border: 1px solid #ddd;
       border-radius: 5px;
@@ -66,6 +68,8 @@
       background-position: right 10px top 50%;
       background-size: 16px;
       padding-right: 30px;
+
+      height: 30px;
     }
 
     .form-group textarea {
@@ -140,16 +144,21 @@
 <body>
   <div class="form-container">
     <h2>Lesson Details</h2>
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="disabilities">Select Disabilities:</label>
       <select id="disabilities" name="disabilities" multiple size="5">
         <option value="autism">Autism</option>
         <option value="dyslexia">Dyslexia</option>
         <option value="adhd">ADHD</option>
-        <option value="visual-impairment">Visual Impairment</option>
-        <option value="hearing-impairment">Hearing Impairment</option>
       </select>
+    </div> -->
+
+    <div class="form-group checkbox-group">
+      <label><input type="checkbox" name="toggle" value="autism"> Autism</label>
+      <label><input type="checkbox" name="toggle" value="dyslexia"> Dyslexia</label>
+      <label><input type="checkbox" name="toggle" value="adhd"> Adhd</label>
     </div>
+
     <div class="form-group checkbox-group">
       <label><input type="checkbox" name="toggle" value="paraprofessional"> Paraprofessional</label>
       <label><input type="checkbox" name="toggle" value="language-helper"> Language Helper</label>
@@ -172,7 +181,7 @@
 
     function goToNextPage() {
       // Collect form data and store it in local storage
-      const disabilities = Array.from(document.getElementById('disabilities').selectedOptions).map(option => option.value);
+      // const disabilities = Array.from(document.getElementById('disabilities').selectedOptions).map(option => option.value);
       const toggles = Array.from(document.querySelectorAll('input[name="toggle"]:checked')).map(checkbox => checkbox.value);
       const formData = {
         disabilities: disabilities,
