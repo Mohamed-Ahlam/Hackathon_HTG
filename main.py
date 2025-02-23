@@ -170,7 +170,7 @@ def render1():
     global lessout1  # Allow modification of global variable
 
     if request.method == 'POST':  # If the user submits the lesson plan
-        lessout1 = request.form.get("lessonPlan", "")  # Save it dynamically
+        lessout1 = request.form.get("lessonPlan")  # Save it dynamically
 
     select_suggestion()  # Ensure this runs before rendering
     return render_template(
@@ -191,7 +191,7 @@ def render2():
     global lessout2  # Allow modification of global variable
 
     if request.method == 'POST':  # If the user submits the lesson plan
-        lessout2 = request.form.get("lessonPlan", "")  # Save it dynamically
+        lessout2 = request.form.get("lessonPlan")  # Save it dynamically
 
     select_suggestion()  # Ensure this runs before rendering
     return render_template(
@@ -211,9 +211,11 @@ def render2():
 def render3():
     global lessout3  # Allow modification of global variable
     if request.method == 'POST':  # If the user submits the lesson plan
-        lessout3 = request.form.get("lessonPlan", "")  # Save it dynamically
+        lessout3 = request.form.get("lessonPlan")  # Save it dynamically
     
     select_suggestion()  # Ensure this runs before rendering
+    print(lessout1 + lessout2 + lessout3)
+
     return render_template(
         'lessonOutThree.html',
         dis1_var=dis1 or "N/A",
@@ -238,11 +240,11 @@ def renderpdf():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    
     # Generate PDF
     pdf_filename = generate_pdf(inputdata, lessout1, lessout2, lessout3)
 
-    return jsonify({"message": "Form submitted successfully!"})
+    return jsonify({"message": "Form submitted successfully!", "pdf": pdf_filename})
+
 
 
 @app.route('/download-pdf')
