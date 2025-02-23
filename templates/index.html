@@ -3,86 +3,83 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TEACHING TREE</title>
-  <link rel="stylesheet" href="/static/styles.css">
+  <title>Teaching Tree</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="form-container">
-    <form id="data-form" enctype="multipart/form-data">
-      <div class="form-wrapper">
-        <div class="form-page" id="form1">
-          <h2>Title</h2>
-          <label for="file-upload">Upload IEPs</label>
-          <input type="file" id="file-upload" name="ieps" accept=".pdf,.docx,.txt" />
-
-          <label for="disabilities">Select Disability</label>
-          <select id="disabilities" name="disabilities">
-            <option value="visual">Visual Impairment</option>
-            <option value="hearing">Hearing Impairment</option>
-            <option value="physical">Physical Disability</option>
-            <option value="intellectual">Intellectual Disability</option>
-            <option value="speech">Speech or Language Disorder</option>
-            <option value="autism">Autism</option>
-            <option value="adhd">ADHD</option>
-          </select>
-
-          <label>Additional Assistance</label>
-          <div class="toggle-group">
-            <label><input type="checkbox" name="assistance" value="paraprofessional"> Paraprofessional</label>
-            <label><input type="checkbox" name="assistance" value="language-helper"> Language Helper</label>
-            <label><input type="checkbox" name="assistance" value="el-students"> EL Students</label>
-            <label><input type="checkbox" name="assistance" value="coteacher"> Coteacher</label>
-          </div>
-
-          <button type="button" onclick="nextForm()">Next</button>
+  <div class="container">
+    <div class="form-slide">
+      <form id="form1">
+        <div class="form-group">
+          <label for="upload">Upload IEPs:</label>
+          <input type="file" id="upload" name="upload">
         </div>
 
-        <div class="form-page" id="form2">
-          <h2>Title</h2>
-          <label for="grade-level">Select Grade Level</label>
-          <select id="grade-level" name="grade">
-            <option value="kindergarten">Kindergarten</option>
+        <div class="form-group multi-select-container">
+          <div class="multi-select">
+            <label for="disabilities">Select Disabilities:</label>
+            <select id="disabilities" name="disabilities" multiple size="5">
+              <option value="autism">Autism</option>
+              <option value="dyslexia">Dyslexia</option>
+              <option value="adhd">ADHD</option>
+              <option value="visual-impairment">Visual Impairment</option>
+              <option value="hearing-impairment">Hearing Impairment</option>
+            </select>
+          </div>
+          <div class="selected-options" id="selectedOptions">
+            Selected options will appear here.
+          </div>
+        </div>
+
+        <div class="form-group toggle-options">
+          <label><input type="checkbox" name="toggle" value="paraprofessional"> Paraprofessional</label>
+          <label><input type="checkbox" name="toggle" value="language-helper"> Language Helper</label>
+          <label><input type="checkbox" name="toggle" value="el-students"> EL Students</label>
+          <label><input type="checkbox" name="toggle" value="coteacher"> Coteacher</label>
+        </div>
+
+        <button type="button" id="nextButton">Next</button>
+      </form>
+
+      <form id="form2">
+        <div class="form-group">
+          <label for="grade">Select Grade Level:</label>
+          <select id="grade" name="grade">
+            <option value="k">Kindergarten</option>
             <option value="1">1st Grade</option>
             <option value="2">2nd Grade</option>
             <option value="3">3rd Grade</option>
             <option value="4">4th Grade</option>
             <option value="5">5th Grade</option>
           </select>
-
-          <label for="lesson-topic">Lesson Topic</label>
-          <input type="text" id="lesson-topic" name="lesson-topic" placeholder="Enter lesson topic" />
-
-          <label for="learning-objective">Learning Objective</label>
-          <input type="text" id="learning-objective" name="learning-objective" placeholder="Enter learning objective" />
-
-          <button type="submit">Submit</button>
         </div>
-      </div>
-    </form>
+
+        <div class="form-group">
+          <label for="lesson">Lesson Topic:</label>
+          <input type="text" id="lesson" name="lesson">
+        </div>
+
+        <div class="form-group">
+          <label for="objective">Learning Objective:</label>
+          <input type="text" id="objective" name="objective">
+        </div>
+        <button type="button" onclick="window.location.href='lessonOutline.html'">Next</button>
+      </form>
+    </div>
   </div>
 
   <script>
-    let currentForm = 0;
+    const nextButton = document.getElementById('nextButton');
+    const formSlide = document.querySelector('.form-slide');
+    const disabilities = document.getElementById('disabilities');
+    const selectedOptions = document.getElementById('selectedOptions');
 
-    function nextForm() {
-      const formWrapper = document.querySelector('.form-wrapper');
-      currentForm = (currentForm + 1) % 2;
-      formWrapper.style.transform = `translateX(-${currentForm * 50}%)`;
-    }
-
-    document.getElementById('data-form').addEventListener('submit', async function(event) {
-      event.preventDefault();
-
-      let formData = new FormData(this);
-
-      let response = await fetch('/submit', {
-        method: 'POST',
-        body: formData
-      });
-
-      let result = await response.json();
-      console.log(result);
-      alert(result.message);
+    nextButton.addEventListener('click', () => {
+      formSlide.style.transform = 'translateX(-100%)';
+    });
+    disabilities.addEventListener('change', () => {
+      const selected = Array.from(disabilities.selectedOptions).map(option => option.text);
+      selectedOptions.textContent = selected.join(', ') || 'Selected options will appear here.';
     });
   </script>
 </body>
